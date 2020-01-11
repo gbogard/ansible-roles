@@ -1,0 +1,33 @@
+---
+- name: Limit SSH traffic 
+  ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+- name: Allow traffic on port 80
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+- name: Allow traffic on port 443
+  ufw:
+    rule: allow
+    port: 443
+    proto: tcp
+- name: Allow traffic on port 2377
+  ufw:
+    rule: allow
+    port: 2377
+    proto: tcp
+- name: Allow traffic on port 7946
+  ufw:
+    rule: allow
+    port: 7946
+- name: Allow traffic on port 4789
+  ufw:
+    rule: allow
+    port: 4789
+- name: Enable UFW and deny traffic by default 
+  ufw:
+    state: enabled
+    policy: deny

@@ -1,0 +1,16 @@
+---
+# tasks file for roles/firewall
+- name: Install dependencies
+  import_tasks: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Disable empty password login
+  lineinfile: dest={{ sshd_config }} regexp="^#?PermitEmptyPasswords" line="PermitEmptyPasswords no"
+  notify: restart sshd
+
+- name: Disable password login
+  lineinfile: dest={{ sshd_config }} regexp="^(#\s*)?PasswordAuthentication " line="PasswordAuthentication no"
+  notify: restart sshd
+
+- name: Configure UFW
+  import_tasks: rules.yml

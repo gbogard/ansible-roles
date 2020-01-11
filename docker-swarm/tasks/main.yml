@@ -1,0 +1,7 @@
+---
+# tasks file for roles/docker-swarm
+- name: Install dependencies
+  import_tasks: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+- name: Setup cluster
+  import_tasks: setup_cluster.yml

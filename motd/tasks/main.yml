@@ -1,0 +1,7 @@
+---
+- name: Delete default motd
+  shell: rm -rf /etc/update-motd.d
+- name: Set Motd
+  template:
+    src: motd.j2
+    dest: /etc/motd

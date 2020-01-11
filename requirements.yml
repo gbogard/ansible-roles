@@ -1,0 +1,5 @@
+---
+- src: https://github.com/nickjj/ansible-fail2ban
+  name: nickjj.fail2ban
+- src: https://github.com/gantsign/ansible-role-oh-my-zsh
+  name: gantsign.omzsh

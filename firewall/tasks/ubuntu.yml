@@ -1,0 +1,5 @@
+- name: "APT - install ufw"
+  apt:
+    name:
+    - "ufw"
+    update_cache: yes

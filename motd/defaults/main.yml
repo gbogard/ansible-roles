@@ -1,0 +1,7 @@
+---
+users:
+  - username: root
+    oh_my_zsh:
+      theme: agnoster
+      plugins:
+        - git

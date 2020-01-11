@@ -1,0 +1,29 @@
+- debug:
+    msg: "Manager {{ item }} has advertise_addr: {{ hostvars[item]['advertise_addr'] }}"
+  loop: "{{ groups['swarm_managers'] }}"
+- debug:
+    msg: "Worker {{ item }} has advertise_addr: {{ hostvars[item]['advertise_addr'] }}"
+  loop: "{{ groups['swarm_workers'] }}"
+- name: Init a new swarm with default parameters
+  when: "'swarm_managers' in group_names"
+  run_once: true
+  register: master
+  docker_swarm:
+    state: present
+    advertise_addr: "{{ advertise_addr }}"
+- name: Add manager nodes
+  when: "'swarm_managers' in group_names"
+  docker_swarm:
+    state: join
+    advertise_addr: "{{ advertise_addr }}"
+    join_token: "{{ master.swarm_facts.JoinTokens.Manager }}"
+    remote_addrs:
+      - "{{ hostvars[groups['swarm_managers'][0]]['advertise_addr'] }}"
+- name: Add worker nodes
+  when: "'swarm_workers' in group_names"
+  docker_swarm:
+    state: join
+    advertise_addr: "{{ advertise_addr }}"
+    join_token: "{{ master.swarm_facts.JoinTokens.Worker }}"
+    remote_addrs:
+      - "{{ hostvars[groups['swarm_managers'][0]]['advertise_addr'] }}"
