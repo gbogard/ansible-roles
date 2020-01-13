@@ -1,0 +1,3 @@
+---
+githubUser: "{{lookup('env','GITHUB_USER')}}"
+githubToken: "{{lookup('env','GITHUB_TOKEN')}}"

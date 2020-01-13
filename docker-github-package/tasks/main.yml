@@ -1,0 +1,9 @@
+---
+# tasks file for roles/docker-github-packages
+- debug:
+    msg: "Running command: Docker authentication for Github user {{ githubUser }}"
+- name: Login
+  docker_login:
+    registry: docker.pkg.github.com
+    username: "{{ githubUser }}"
+    password: "{{ githubToken }}"
