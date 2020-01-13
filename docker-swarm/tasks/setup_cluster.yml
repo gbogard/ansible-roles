@@ -1,7 +1,9 @@
-- debug:
+- when: "'swarm_managers' in groups"
+  debug:
     msg: "Manager {{ item }} has advertise_addr: {{ hostvars[item]['advertise_addr'] }}"
   loop: "{{ groups['swarm_managers'] }}"
-- debug:
+- when: "'swarm_workers' in groups"
+  debug:
     msg: "Worker {{ item }} has advertise_addr: {{ hostvars[item]['advertise_addr'] }}"
   loop: "{{ groups['swarm_workers'] }}"
 - name: Init a new swarm with default parameters
@@ -20,7 +22,9 @@
     remote_addrs:
       - "{{ hostvars[groups['swarm_managers'][0]]['advertise_addr'] }}"
 - name: Add worker nodes
-  when: "'swarm_workers' in group_names"
+  when: 
+    - "'swarm_workers' in groups"
+    - "'swarm_workers' in group_names"
   docker_swarm:
     state: join
     advertise_addr: "{{ advertise_addr }}"
